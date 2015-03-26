@@ -25,7 +25,8 @@ public class Server implements Runnable {
 	private MonsterEntity currentMonster;
 
 	private boolean running;
-	private boolean isFirst = true;
+	
+	private int monsterLevel = 1;
 
 	private int uniqueid;
 	private int port;
@@ -43,7 +44,7 @@ public class Server implements Runnable {
 		this.clients = new ArrayList <ClientConnection>();
 		this.users = new ArrayList <User>();
 		this.running = true;
-		this.currentMonster = newMonster(Monster.SCHIPPER, 40, 1);
+		this.currentMonster = newMonster(Monster.SCHIPPER, 40, monsterLevel);
 	}
 
 	@Override
@@ -69,8 +70,6 @@ public class Server implements Runnable {
 
 				clients.add(new ClientConnection(serverSocket.accept(), ++uniqueid));
 				
-				isFirst = false;
-				
 				if(!running){
 					break;
 				}
@@ -93,6 +92,20 @@ public class Server implements Runnable {
 			}
 		} catch (Exception e){
 
+		}
+	}
+	
+	/*
+	 * Broadcasting a new monster to all clients
+	 */
+	public void broadcastMonster(MonsterEntity monster){
+		display("Sending a new monster to all clients");
+		try {
+			for(int i = 0;i < clients.size();i++){
+				clients.get(i).sendClientMonster(monster);;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
 	}
 
@@ -121,9 +134,19 @@ public class Server implements Runnable {
 	public void updateMonsterHealth(int dmg){
 		if(this.currentMonster.getCurrentHealth() - dmg < 0){
 			this.currentMonster.setCurrentHealth(0);
+			this.newServerMonster();
 		} else {
 			this.currentMonster.setCurrentHealth(this.currentMonster.getCurrentHealth() - dmg);
 		}
+	}
+	
+	/*
+	 * Monster was killed so we're making a new one
+	 */
+	public void newServerMonster(){
+		display("Creating a new monster.");
+		this.currentMonster = newMonster(Monster.SCHIPPER, 40, ++monsterLevel);
+		this.broadcastMonster(currentMonster);
 	}
 	
 	/*

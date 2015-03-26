@@ -23,8 +23,8 @@ public class Monster extends JPanel implements Runnable{
 	
 	private static final int IDLE = 0, HURT = 1, DEAD = 2, MAD = 3, MADHURT = 4;
 	
-	private static int MONSTERWIDTH = 0;
-	private static int MONSTERHEIGHT = 0;
+	private static final int MONSTERWIDTH = 480;
+	private static final int MONSTERHEIGHT = 480;
 	
 	private ImageIcon idle, hurt, dead, mad, madhurt;
 	private JLabel imgLabel;
@@ -55,21 +55,18 @@ public class Monster extends JPanel implements Runnable{
 		this.maxHealth = maxHealth;
 		
 		this.alive = true;
-		this.MONSTERWIDTH = 480;
-		this.MONSTERHEIGHT = 480;
+		this.hit = false;
+		
 		this.imgLabel = new JLabel();
 		
 		switch(type){
 		case HUELE:
-			setHealth(60);
 			setImages("huele");
 			break;
 		case SCHIPPER:
-			setHealth(40);
 			setImages("schipper");
 			break;
 		case ZOIDBERG:
-			setHealth(80);
 			setImages("zoidberg");
 			break;
 		}
@@ -90,7 +87,6 @@ public class Monster extends JPanel implements Runnable{
 	@Override
 	public void run() {
 		try {
-			
 			while(alive){
 				if(hit){
 					if(!enraged){
@@ -104,14 +100,14 @@ public class Monster extends JPanel implements Runnable{
 						this.setMadHurt();
 						Thread.sleep(100);
 						this.setMad();
+						
 					}
 					this.hit = false;
 				
 				} else if (!alive){
 					this.setDead();
 				}
-			}
-			this.setDead();
+			} 
 			
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -142,6 +138,10 @@ public class Monster extends JPanel implements Runnable{
 	private void setMadHurt(){
 		this.enraged = true;
 		this.imgLabel.setIcon(madhurt);
+	}
+	
+	public void setDefaultState(){
+		this.imgLabel.setIcon(idle);
 	}
 	
 	/*
@@ -175,11 +175,6 @@ public class Monster extends JPanel implements Runnable{
 	/*
 	 * Setters
 	 */
-	private void setHealth(int health){
-		//int i = random.nextInt(level*50);
-		//this.health = health + ((health * (level * level)) + i);
-	}
-	
 	private void setImages(String type){
 		try {
 			idle = getResizedImage("/res/" + type +"/idle.png");

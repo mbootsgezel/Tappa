@@ -51,6 +51,10 @@ public class Game extends JFrame implements Runnable{
 		System.err.println(d.now() + " Game - " + s);
 	}
 	
+	public static void selfDestroy(){
+		instance = null;
+	}
+	
 	public static Game getInstance(){
 		if(instance == null){
 			instance = new Game();

@@ -86,6 +86,7 @@ public class Client implements Runnable{
 					break;
 				case Entity.MONSTER:
 					MonsterEntity m = (MonsterEntity) ent.getObject();
+					display("New monster received: " + m.toString());
 					Monster monster = new Monster(m.getType(), m.getLevel(), m.getCurrentHealth(), m.getMaxHealth());
 					LevelPanel.getInstance().setMonster(monster);
 					Game.getInstance().initGame();

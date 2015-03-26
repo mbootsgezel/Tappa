@@ -107,7 +107,7 @@ public class ClientConnection extends Thread {
 	}
 	
 	public void sendClientMonster(MonsterEntity monster){
-		//display("Sending new serverMonster to client");
+		display("Sending new serverMonster to client");
 		Entity newMonster = new Entity(Entity.MONSTER, monster);
 		try { 
 			toClient.writeObject(newMonster);

@@ -26,13 +26,13 @@ public class LevelPanel extends JPanel{
 		healthBar.damage(click.getDamage());
 		if(healthBar.getCurrentHealth() > 0){
 			monster.hitMonster();
-			
 		} else {
 			monster.killMonster();
 		}
 	}
 	
 	public void setMonster(Monster monster){
+		this.monster = null;
 		this.monster = monster;
 		this.monster.setBounds(160, 80, 480, 480);
 		this.add(monster);	
@@ -47,6 +47,10 @@ public class LevelPanel extends JPanel{
 		this.healthBar = new HealthBar(monster.getCurrentHealth(), monster.getMaxHealth());
 		this.healthBar.setBounds(25, 0, 750, 30);
 		this.add(healthBar);
+	}
+	
+	public Monster getMonster(){
+		return monster;
 	}
 	
 	public static LevelPanel getInstance(){
