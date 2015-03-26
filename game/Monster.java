@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 
 import model.CurrentDate;
 
-public class Monster extends JPanel{
+public class Monster extends JPanel implements Runnable{
 	
 	public static final int HUELE = 0, ZOIDBERG = 1, SCHIPPER = 2;
 	
@@ -31,7 +31,10 @@ public class Monster extends JPanel{
 	private int maxHealth;
 	private int type;
 	private int level;
-	private volatile int state;
+	
+	private volatile boolean alive;
+	
+	private volatile boolean hit;
 	
 	private CurrentDate d = new CurrentDate();
 	
@@ -45,7 +48,7 @@ public class Monster extends JPanel{
 		this.currentHealth = currentHealth;
 		this.maxHealth = maxHealth;
 		
-		this.state = IDLE;
+		this.alive = true;
 		this.MONSTERWIDTH = 480;
 		this.MONSTERHEIGHT = 480;
 		this.imgLabel = new JLabel();
@@ -67,7 +70,7 @@ public class Monster extends JPanel{
 		
 		this.imgLabel.setBounds(0, 0, MONSTERWIDTH, MONSTERHEIGHT);
 		
-		this.imgLabel.setIcon(idle);
+		this.setIdle();
 	
 		this.add(imgLabel, BorderLayout.CENTER);
 	
@@ -75,6 +78,60 @@ public class Monster extends JPanel{
 		
 		//this.setBackground(Color.BLACK);
 		this.setVisible(true);
+	}
+	
+
+	@Override
+	public void run() {
+		try {
+			
+			while(alive){
+				if(hit){
+					try {
+						this.setHurt();
+						Thread.sleep(100);
+						this.setIdle();
+						this.hit = false;
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} else if (!alive){
+					this.setDead();
+				}
+			}
+			this.setDead();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+	}
+	
+	/*
+	 * State setters
+	 */
+	private void setIdle(){
+		this.imgLabel.setIcon(idle);
+	}
+	
+	private void setHurt(){
+		this.imgLabel.setIcon(hurt);
+	}
+	
+	private void setDead(){
+		this.imgLabel.setIcon(dead);
+	}
+	
+	/*
+	 * Damage monster
+	 */
+	public void hitMonster(){
+		this.hit = true;
+	}
+	
+	public void killMonster(){
+		this.alive = false;
 	}
 	
 	/*
@@ -111,10 +168,6 @@ public class Monster extends JPanel{
 		} catch (Exception e) {
 			displayError("Can't load madhurt.png");
 		}
-	}
-	
-	private void switchState(int state){
-		this.state = state;
 	}
 	
 	/*

@@ -24,14 +24,23 @@ public class LevelPanel extends JPanel{
 	
 	public void damageMonster(Click click){
 		healthBar.damage(click.getDamage());
+		if(healthBar.getCurrentHealth() > 0){
+			monster.hitMonster();
+			
+		} else {
+			monster.killMonster();
+		}
 	}
 	
 	public void setMonster(Monster monster){
 		this.monster = monster;
 		this.monster.setBounds(160, 80, 480, 480);
-		this.add(monster);
-		
+		this.add(monster);	
 		setHealthBar();
+	}
+	
+	public void runMonster(){
+		new Thread(monster).start();
 	}
 	
 	private void setHealthBar(){

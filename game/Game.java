@@ -39,6 +39,7 @@ public class Game extends JFrame implements Runnable{
 		this.remove(loading);
 		this.levelPanel = LevelPanel.getInstance();
 		this.add(levelPanel);
+		this.levelPanel.runMonster();
 		this.setVisible(true);
 	}
 	

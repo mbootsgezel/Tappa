@@ -39,7 +39,7 @@ public class Client implements Runnable{
 		
 		user.setUsername(System.getProperty("user.name"));
 		user.setLevel(1);
-		user.setDamage(1);
+		user.setDamage(3);
 	}
 
 	@Override
