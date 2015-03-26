@@ -17,8 +17,7 @@ public class LoadingScreen extends JPanel {
 		this.loadLabel = new JLabel("Connecting to server..");
 		this.loadLabel.setHorizontalAlignment(JLabel.CENTER);
 		this.add(loadLabel, BorderLayout.CENTER);
-		
-		//this.setBackground(Color.BLACK);
+
 	}
 
 }
