@@ -12,6 +12,8 @@ public class Game extends JFrame implements Runnable{
 	
 	private static Game instance;
 	
+	private LoadingScreen loading;
+	
 	private LevelPanel levelPanel;
 	
 	private CurrentDate d = new CurrentDate();
@@ -20,6 +22,10 @@ public class Game extends JFrame implements Runnable{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(WIDTH, HEIGHT);
 		this.setLocationRelativeTo(null);
+		this.loading = new LoadingScreen();
+		
+		this.add(loading);
+		this.setVisible(true);
 	}
 	
 	@Override
@@ -30,6 +36,8 @@ public class Game extends JFrame implements Runnable{
 	
 	public void initGame(){
 		//display("Game init run");
+		this.setVisible(false);
+		this.remove(loading);
 		this.levelPanel = LevelPanel.getInstance();
 		this.add(levelPanel);
 		this.setVisible(true);
