@@ -7,6 +7,8 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -33,8 +35,12 @@ public class Monster extends JPanel implements Runnable{
 	private int level;
 	
 	private volatile boolean alive;
-	
 	private volatile boolean hit;
+	
+	private boolean enraged;
+	private boolean enrageTriggered;
+	
+	private Timer enrage;
 	
 	private CurrentDate d = new CurrentDate();
 	
@@ -87,15 +93,20 @@ public class Monster extends JPanel implements Runnable{
 			
 			while(alive){
 				if(hit){
-					try {
+					if(!enraged){
+						if(!enrageTriggered && type == SCHIPPER){
+							this.startEnrageTimer();
+						}
 						this.setHurt();
 						Thread.sleep(100);
 						this.setIdle();
-						this.hit = false;
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					} else {
+						this.setMadHurt();
+						Thread.sleep(100);
+						this.setMad();
 					}
+					this.hit = false;
+				
 				} else if (!alive){
 					this.setDead();
 				}
@@ -123,6 +134,16 @@ public class Monster extends JPanel implements Runnable{
 		this.imgLabel.setIcon(dead);
 	}
 	
+	private void setMad(){
+		this.enraged = true;
+		this.imgLabel.setIcon(mad);
+	}
+	
+	private void setMadHurt(){
+		this.enraged = true;
+		this.imgLabel.setIcon(madhurt);
+	}
+	
 	/*
 	 * Damage monster
 	 */
@@ -132,6 +153,23 @@ public class Monster extends JPanel implements Runnable{
 	
 	public void killMonster(){
 		this.alive = false;
+	}
+	
+	/*
+	 * Enrage timer start
+	 */
+	public void startEnrageTimer(){
+		this.enrageTriggered = true;
+		this.enrage = new Timer();
+		this.enrage.schedule(new EnrageTimer(), 2*1000);
+		
+	}
+	
+	class EnrageTimer extends TimerTask{
+		@Override
+		public void run() {
+			setMad();
+		}
 	}
 	
 	/*
