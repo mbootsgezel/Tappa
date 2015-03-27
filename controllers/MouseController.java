@@ -1,14 +1,13 @@
 package controllers;
 
-import entities.Click;
-import entities.MonsterEntity;
-import entities.User;
-import game.LevelPanel;
-
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import client.Client;
+import entities.Click;
+import entities.User;
+import game.LevelPanel;
+import game.Splash;
 
 
 public class MouseController implements MouseListener{

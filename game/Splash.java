@@ -1,5 +1,7 @@
 package game;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -16,7 +18,7 @@ import model.CurrentDate;
 
 public class Splash extends JPanel{
 
-	public static final int SPLASH1 = 0, SPLASH2 = 1, SPLASH3 = 2; 
+	public static final int SPLASH1 = 1, SPLASH2 = 2, SPLASH3 = 3; 
 
 	private static int SPLASHWIDTH = 200;
 	private static int SPLASHHEIGHT = 200;
@@ -32,33 +34,43 @@ public class Splash extends JPanel{
 
 	public Splash(){
 
-		this.setSize(SPLASHWIDTH, SPLASHHEIGHT);
+		this.setSize(100, 100);
 		this.setLayout(null);
 		
 		this.splashLabel = new JLabel();
 		
+		this.splashLabel.setBounds(0, 0, 100, 100);
+		
 		this.r = new Random();
 		
-		setImages();
+		this.setImages();
+		
+		this.splashLabel.setIcon(splash1);
+		
+		//this.setBackground(Color.BLACK);
+		
+		this.add(splashLabel, BorderLayout.CENTER);
+		
+		this.setVisible(true);
+		
 		
 	}
 
 	public void Show(int x, int y){
-		
-		switch (r.nextInt(2)){
-		case 0 :
+		displayError("Setting splash @ X" + x + ", Y" + y);
+		switch (r.nextInt(2)+1){
+		case 1 :
 			setSplash1();
 			break;
-		case 1 : 
+		case 2 : 
 			setSplash2();
 			break;
-		case 2 : 
+		case 3 : 
 			setSplash3();
 			break;
 		}
 		
-		splashLabel.setLocation(x,y);
-		splashLabel.setVisible(true);
+		this.setVisible(true);
 		
 		
 		
@@ -107,7 +119,7 @@ public class Splash extends JPanel{
 			BufferedImage newimage = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_ARGB);
 			AffineTransform transform = new AffineTransform();
 			//transform.translate(480, 480);
-			transform.scale(1.0, 1.0);
+			transform.scale(0.5, 0.5);
 			AffineTransformOp scaleOp = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);
 			img = scaleOp.filter(img, newimage);
 			return new ImageIcon(img);
