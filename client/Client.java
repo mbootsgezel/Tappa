@@ -39,7 +39,7 @@ public class Client implements Runnable{
 		
 		user.setUsername(System.getProperty("user.name"));
 		user.setLevel(1);
-		user.setDamage(3);
+		user.setDamage(17);
 	}
 
 	@Override
@@ -88,8 +88,7 @@ public class Client implements Runnable{
 					MonsterEntity m = (MonsterEntity) ent.getObject();
 					display("New monster received: " + m.toString());
 					Monster monster = new Monster(m.getType(), m.getLevel(), m.getCurrentHealth(), m.getMaxHealth());
-					LevelPanel.getInstance().setMonster(monster);
-					Game.getInstance().initGame();
+					Game.getInstance().initGame(monster);
 					break;
 				}
 			}

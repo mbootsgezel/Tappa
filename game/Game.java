@@ -34,13 +34,22 @@ public class Game extends JFrame implements Runnable{
 		
 	}
 	
-	public void initGame(){
+	public void initGame(Monster monster){
 		//display("Game init run");
 		this.remove(loading);
 		this.levelPanel = LevelPanel.getInstance();
 		this.add(levelPanel);
-		this.levelPanel.runMonster();
+		this.levelPanel.resetLevel();
+		this.levelPanel.initLevel(monster);
 		this.setVisible(true);
+	}
+	
+	private void gameSleep(long time){
+		try {
+			Thread.sleep(time);
+		} catch (Exception e) {
+			displayError("Can't put monster to sleep!");
+		}
 	}
 	
 	private void display(String s){

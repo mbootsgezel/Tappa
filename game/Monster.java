@@ -83,6 +83,13 @@ public class Monster extends JPanel implements Runnable{
 		this.setVisible(true);
 	}
 	
+	public void setMonster(int level, int currentHealth, int maxHealth){
+		this.type = type;
+		this.level = level;
+		this.currentHealth = currentHealth;
+		this.maxHealth = maxHealth;
+	}
+	
 
 	@Override
 	public void run() {
@@ -140,10 +147,6 @@ public class Monster extends JPanel implements Runnable{
 		this.imgLabel.setIcon(madhurt);
 	}
 	
-	public void setDefaultState(){
-		this.imgLabel.setIcon(idle);
-	}
-	
 	/*
 	 * Damage monster
 	 */
@@ -153,6 +156,10 @@ public class Monster extends JPanel implements Runnable{
 	
 	public void killMonster(){
 		this.alive = false;
+	}
+	
+	public void reviveMonster(){
+		this.alive = true;
 	}
 	
 	/*
