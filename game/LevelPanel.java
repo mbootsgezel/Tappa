@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import javax.swing.JPanel;
 
+import controllers.ActionSound;
 import controllers.MouseController;
 import entities.Click;
 
@@ -15,18 +16,21 @@ public class LevelPanel extends JPanel{
 	
 	private Monster monster;
 	
+	private ActionSound as;
+	
 	private LevelPanel() {
 		this.addMouseListener(new MouseController());
 		this.setSize(800, 500);
 		this.setLayout(null);
 		this.setVisible(true);
+		this.as = new ActionSound("punch.wav");
 	}
 	
 	public void damageMonster(Click click){
 		healthBar.damage(click.getDamage());
+		as.playSound();
 		if(healthBar.getCurrentHealth() > 0){
-			monster.hitMonster();
-			
+			monster.hitMonster();	
 		} else {
 			monster.killMonster();
 		}

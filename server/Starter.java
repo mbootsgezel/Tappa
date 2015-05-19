@@ -1,5 +1,8 @@
 package server;
 
+import java.awt.KeyboardFocusManager;
+
+import controllers.KeyboardController;
 import game.Monster;
 import game.Game;
 import client.Client;
@@ -11,6 +14,9 @@ public class Starter {
 		new Thread(Server.newInstance(1500)).start();
 		new Thread(Client.newInstance("localhost", 1500)).start();
 		new Thread(Game.getInstance()).start();
+		
+		KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+		manager.addKeyEventDispatcher(new KeyboardController());
 		
 	}
 }

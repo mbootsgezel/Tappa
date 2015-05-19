@@ -41,8 +41,8 @@ public class Skill extends JPanel implements Runnable{
 		this.cooldown = cooldown;
 		this.onCooldown = false;
 
-		this.activeImage = getResizedImage("/resources/BlackarrowDown.png");
-		this.cooldownImage = getResizedImage("/resources/cooldown.png");
+		this.activeImage = getResizedImage("/res/skills/nocturne.png");
+		this.cooldownImage = getResizedImage("/res/skills/cooldown.png");
 
 		this.imageLabel = new JLabel();
 		this.imageLabel.setBounds(0, 0, WIDTH, HEIGHT);
@@ -72,6 +72,7 @@ public class Skill extends JPanel implements Runnable{
 
 	@Override
 	public void run() {
+		System.out.println("Skill started!");
 		try {
 			while(true){
 				if(!onCooldown){

@@ -16,6 +16,8 @@ public class Game extends JFrame implements Runnable{
 	
 	private LevelPanel levelPanel;
 	
+	private SkillBar skillbar;
+	
 	private CurrentDate d = new CurrentDate();
 	
 	private Game() {
@@ -39,6 +41,10 @@ public class Game extends JFrame implements Runnable{
 		this.remove(loading);
 		this.levelPanel = LevelPanel.getInstance();
 		this.add(levelPanel);
+		this.skillbar = SkillBar.getInstance();
+		this.add(skillbar);
+		this.skillbar.setBounds(300, 100, 300, 54);
+		this.skillbar.setVisible(true);
 		this.levelPanel.runMonster();
 		this.setVisible(true);
 	}
